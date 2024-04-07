@@ -1,0 +1,11 @@
+# classic nmap
+nmap -T4 -A -Pn 10.10.11.242
+
+# Full nmap
+nmap -T4 -A -Pn -p- 10.10.11.242
+
+# subdomain enumeration
+wfuzz -w /usr/share/wordlists/SecLists/Discovery/DNS/subdomains-top1million-20000.txt -u http://devvortex.htb -H 'Host: FUZZ.devvortex.htb'
+
+# directory fuzzing
+ffuf -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -u http://dev.devvortex.htb/FUZZ
