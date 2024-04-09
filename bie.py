@@ -1,6 +1,7 @@
 import argparse
 import subprocess
 import os
+from multiprocessing import Process
 
 def classic_nmap(ip, output_file):
     command = f'nmap -T4 -A -Pn {ip}'
@@ -44,26 +45,45 @@ if __name__ == "__main__":
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
 
+    processes = []
+
     with open(os.path.join(output_folder, 'classic_nmap.txt'), 'w') as output_file:
-        classic_nmap(ip, output_file)
+        p = Process(target=classic_nmap, args=(ip, output_file))
+        p.start()
+        processes.append(p)
 
     with open(os.path.join(output_folder, 'full_nmap.txt'), 'w') as output_file:
-        full_nmap(ip, output_file)
+        p = Process(target=full_nmap, args=(ip, output_file))
+        p.start()
+        processes.append(p)
 
     if domain:
         with open(os.path.join(output_folder, 'subdomain_enum.txt'), 'w') as output_file:
-            subdomain_enum(domain, output_file)
+            p = Process(target=subdomain_enum, args=(domain, output_file))
+            p.start()
+            processes.append(p)
 
         with open(os.path.join(output_folder, 'directory_fuzzing.txt'), 'w') as output_file:
-            directory_fuzzing(domain, output_file)
+            p = Process(target=directory_fuzzing, args=(domain, output_file))
+            p.start()
+            processes.append(p)
 
     with open(os.path.join(output_folder, 'nikto_scan.txt'), 'w') as output_file:
-        nikto_scan(ip, output_file)
+        p = Process(target=nikto_scan, args=(ip, output_file))
+        p.start()
+        processes.append(p)
 
     nmap_output = subprocess.check_output(['nmap', '-p', '139,445', '--open', '-oG', '-', ip]).decode('utf-8')
     if '139/open' in nmap_output or '445/open' in nmap_output:
         with open(os.path.join(output_folder, 'enum4linux.txt'), 'w') as output_file:
-            enum4linux(ip, output_file)
+            p = Process(target=enum4linux, args=(ip, output_file))
+            p.start()
+            processes.append(p)
 
     with open(os.path.join(output_folder, 'other_enumeration.txt'), 'w') as output_file:
-        other_enumeration(ip, output_file)
+        p = Process(target=other_enumeration, args=(ip, output_file))
+        p.start()
+        processes.append(p)
+
+    for p in processes:
+        p.join()
