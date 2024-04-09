@@ -4,28 +4,46 @@ import os
 from multiprocessing import Process
 
 def classic_nmap(ip, output_file):
-    command = f'nmap -T4 -A -Pn {ip}'
-    subprocess.run(command, shell=True, stdout=output_file, stderr=subprocess.STDOUT)
+    try:
+        command = f'nmap -T4 -A -Pn {ip}'
+        subprocess.run(command, shell=True, stdout=output_file, stderr=subprocess.STDOUT)
+    except Exception as e:
+        print(f"Error occurred during classic_nmap scan: {e}")
 
 def full_nmap(ip, output_file):
-    command = f'nmap -T4 -sT -Pn -p- {ip}'
-    subprocess.run(command, shell=True, stdout=output_file, stderr=subprocess.STDOUT)
+    try:
+        command = f'nmap -T4 -sT -Pn -p- {ip}'
+        subprocess.run(command, shell=True, stdout=output_file, stderr=subprocess.STDOUT)
+    except Exception as e:
+        print(f"Error occurred during full_nmap scan: {e}")
 
 def subdomain_enum(domain, output_file):
-    command = f"wfuzz -w /usr/share/wordlists/SecLists/Discovery/DNS/subdomains-top1million-20000.txt -u http://{domain} -H 'Host: FUZZ.{domain}'"
-    subprocess.run(command, shell=True, stdout=output_file, stderr=subprocess.STDOUT)
+    try:
+        command = f"wfuzz -w /usr/share/wordlists/SecLists/Discovery/DNS/subdomains-top1million-20000.txt -u http://{domain} -H 'Host: FUZZ.{domain}'"
+        subprocess.run(command, shell=True, stdout=output_file, stderr=subprocess.STDOUT)
+    except Exception as e:
+        print(f"Error occurred during subdomain_enum: {e}")
 
 def directory_fuzzing(domain, output_file):
-    command = f"ffuf -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -u http://{domain}/FUZZ"
-    subprocess.run(command, shell=True, stdout=output_file, stderr=subprocess.STDOUT)
+    try:
+        command = f"ffuf -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -u http://{domain}/FUZZ"
+        subprocess.run(command, shell=True, stdout=output_file, stderr=subprocess.STDOUT)
+    except Exception as e:
+        print(f"Error occurred during directory_fuzzing: {e}")
 
 def nikto_scan(ip, output_file):
-    command = f'nikto -h {ip}'
-    subprocess.run(command, shell=True, stdout=output_file, stderr=subprocess.STDOUT)
+    try:
+        command = f'nikto -h {ip}'
+        subprocess.run(command, shell=True, stdout=output_file, stderr=subprocess.STDOUT)
+    except Exception as e:
+        print(f"Error occurred during nikto_scan: {e}")
 
 def enum4linux(ip, output_file):
-    command = f'enum4linux {ip}'
-    subprocess.run(command, shell=True, stdout=output_file, stderr=subprocess.STDOUT)
+    try:
+        command = f'enum4linux {ip}'
+        subprocess.run(command, shell=True, stdout=output_file, stderr=subprocess.STDOUT)
+    except Exception as e:
+        print(f"Error occurred during enum4linux: {e}")
 
 def other_enumeration(ip, output_file):
     # Add other enumeration tools here as needed
