@@ -11,66 +11,73 @@ def print_banner():
 ██╔══██╗██║██╔══╝  
 ██████╔╝██║███████╗
 ╚═════╝ ╚═╝╚══════╝
-bie 1.1.0 Copyright (c) 2023 by Mohamed Karrab
+bie 1.1.0 Copyright (c) 2024 by Mohamed Karrab
 """
     print(banner)
 
+def update_hosts_file(ip, domain):
+    try:
+        with open('/etc/hosts', 'a') as hosts_file:
+            hosts_file.write(f"{ip}\t{domain}\n")
+        print("[✓] Updated /etc/hosts with target IP and domain.")
+    except Exception as e:
+        print(f"[-] Error occurred while updating /etc/hosts: {e}")
+
 def classic_nmap(ip, output_file):
     try:
-        print("Starting classic_nmap scan...")
+        print("[+] Starting classic_nmap scan...")
         command = f'nmap -T4 -A -Pn {ip}'
         subprocess.run(command, shell=True, stdout=output_file, stderr=subprocess.STDOUT)
-        print("classic_nmap scan finished.")
+        print("[✓] classic_nmap scan finished.")
     except Exception as e:
-        print(f"Error occurred during classic_nmap scan: {e}")
+        print(f"[-] Error occurred during classic_nmap scan: {e}")
 
 def full_nmap(ip, output_file):
     try:
-        print("Starting full_nmap scan...")
+        print("[+] Starting full_nmap scan...")
         command = f'nmap -T4 -sT -Pn -p- {ip}'
         subprocess.run(command, shell=True, stdout=output_file, stderr=subprocess.STDOUT)
-        print("full_nmap scan finished.")
+        print("[✓] full_nmap scan finished.")
     except Exception as e:
-        print(f"Error occurred during full_nmap scan: {e}")
+        print(f"[-] Error occurred during full_nmap scan: {e}")
 
 def subdomain_enum(domain, output_file):
     try:
-        print("Starting subdomain_enum scan...")
+        print("[+] Starting subdomain_enum scan...")
         command = f"wfuzz -w /usr/share/wordlists/SecLists/Discovery/DNS/subdomains-top1million-20000.txt -u http://{domain} -H 'Host: FUZZ.{domain}'"
         subprocess.run(command, shell=True, stdout=output_file, stderr=subprocess.STDOUT)
-        print("subdomain_enum scan finished.")
+        print("[✓] subdomain_enum scan finished.")
     except Exception as e:
-        print(f"Error occurred during subdomain_enum: {e}")
+        print(f"[-] Error occurred during subdomain_enum: {e}")
 
 def directory_fuzzing(domain, output_file):
     try:
-        print("Starting directory_fuzzing scan...")
+        print("[+] Starting directory_fuzzing scan...")
         command = f"ffuf -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -u http://{domain}/FUZZ"
         subprocess.run(command, shell=True, stdout=output_file, stderr=subprocess.STDOUT)
-        print("directory_fuzzing scan finished.")
+        print("[✓] directory_fuzzing scan finished.")
     except Exception as e:
-        print(f"Error occurred during directory_fuzzing: {e}")
+        print(f"[-] Error occurred during directory_fuzzing: {e}")
 
 def nikto_scan(ip, output_file):
     try:
-        print("Starting nikto_scan...")
+        print("[+] Starting nikto_scan...")
         command = f'nikto -h {ip}'
         subprocess.run(command, shell=True, stdout=output_file, stderr=subprocess.STDOUT)
-        print("nikto_scan finished.")
+        print("[✓] nikto_scan finished.")
     except Exception as e:
-        print(f"Error occurred during nikto_scan: {e}")
+        print(f"[-] Error occurred during nikto_scan: {e}")
 
 def enum4linux(ip, output_file):
     try:
-        print("Starting enum4linux scan...")
+        print("[+] Starting enum4linux scan...")
         command = f'enum4linux {ip}'
         subprocess.run(command, shell=True, stdout=output_file, stderr=subprocess.STDOUT)
-        print("enum4linux scan finished.")
+        print("[✓] enum4linux scan finished.")
     except Exception as e:
-        print(f"Error occurred during enum4linux: {e}")
+        print(f"[-] Error occurred during enum4linux: {e}")
 
 def other_enumeration(ip, output_file):
-    # Add other enumeration tools here as needed
     pass
 
 if __name__ == "__main__":
@@ -88,6 +95,8 @@ if __name__ == "__main__":
     output_folder = 'bie_scans'
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
+
+    update_hosts_file(ip, domain)
 
     processes = []
 
