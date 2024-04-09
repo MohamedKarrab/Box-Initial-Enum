@@ -17,22 +17,28 @@ def directory_fuzzing(domain):
     command = f"ffuf -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -u http://{domain}/FUZZ"
     subprocess.run(command, shell=True)
 
+def nikto_scan(ip):
+    command = f'nikto -h {ip}'
+    subprocess.run(command, shell=True)
+
+def other_enumeration(ip):
+    # Add other enumeration tools here as needed
+    pass
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Script to perform various scans and enumeration.')
-    parser.add_argument('target', help='IP address or domain name')
+    parser.add_argument('ip', help='IP address of the target')
+    parser.add_argument('--domain', help='Domain name of the target (optional)')
 
     args = parser.parse_args()
 
-    target = args.target
+    ip = args.ip
+    domain = args.domain
 
-    # Assuming the input can be either IP address or domain name
-    try:
-        # Checking if the input is an IP address
-        ip = target
-        classic_nmap(ip)
-        full_nmap(ip)
-    except ValueError:
-        # If not an IP address, assuming it's a domain name
-        domain = target
+    classic_nmap(ip)
+    full_nmap(ip)
+    if domain:
         subdomain_enum(domain)
         directory_fuzzing(domain)
+    nikto_scan(ip)
+    other_enumeration(ip)
