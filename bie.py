@@ -11,7 +11,7 @@ def print_banner():
 ██╔══██╗██║██╔══╝  
 ██████╔╝██║███████╗
 ╚═════╝ ╚═╝╚══════╝
-bie 1.1.0 Copyright (c) 2024 by Mohamed Karrab
+bie 1.1.0 Author: Mohamed Karrab @Alashwas
 """
     print(banner)
 
