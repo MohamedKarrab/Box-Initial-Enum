@@ -9,15 +9,16 @@
 ╚═════╝ ╚═╝╚══════╝
 ```
 
-This script automates initial enumeration tasks commonly performed on Hack The Box (HTB) and TryHackMe machines. It integrates many tools such as Nmap, Nikto, ffuf.. to provide comprehensive scanning and enumeration of a target's infrastructure and web applications.
+Bie automates initial enumeration and scanning commonly performed on Hack The Box (HTB) and TryHackMe machines. It integrates many tools such as Nmap, Nikto, ffuf, enum4linux.. to be as comprehensive as possible.
 
 ## Features
 
-- **Nmap Scans**: Conducts both classic and full port Nmap scans with aggressive options.
+- **Nmap Scans**: Conducts full port and classic Nmap scans with the needed options.
 - **Subdomain Enumeration**: Utilizes wfuzz to discover subdomains of the specified domain.
-- **Directory Fuzzing**: Employs ffuf to perform directory fuzzing on the provided domain.
+- **Directory Fuzzing**: Fast ffuf directory fuzzing.
 - **Web Server Scan**: Conducts a web server scan using Nikto.
-- **Additional Enumeration**: Placeholder for integrating further enumeration tools as needed.
+- **SMB enumeration**: Using enum4linux if ports 139 or 445 are available.
+- **Additional Enumeration**: You can use your own tools here.
 
 ## Prerequisites
 
@@ -30,7 +31,7 @@ This script automates initial enumeration tasks commonly performed on Hack The B
 ## Usage
 
 ```bash
-python script.py <ip> [-d <domain>]
+sudo python3 bie.py <IP> [-d <domain>]
 ```
 
 - `<ip>`: Mandatory argument specifying the IP address of the target.
@@ -39,14 +40,24 @@ python script.py <ip> [-d <domain>]
 Example:
 
 ```bash
-python script.py <IP> --domain example.com
+sudo python3 bie.py 10.10.11.242 -d somedomain
 ```
+
+## Configuration and hints
+
+How to filter valid subdomains? (change 154 with the repeating number of Chars)
+```bash
+cat subdomain_enum.txt | grep -v "154 Ch" 
+```
+
+You may need to change wordlists location to where you have them, this is the default configuration:
+
 
 ## Note
 
 - This script needs to be ran using sudo for the /etc/hosts changes to take place.
 - Ensure that you have appropriate permissions before scanning any target.
-- Usage of this script for unauthorized access or against targets without proper authorization is strictly prohibited and may be illegal.
+- Usage of this script for unauthorized access or against targets without proper authorization is strictly prohibited.
 
 ## Disclaimer
 
