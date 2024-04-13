@@ -50,7 +50,8 @@ How to filter valid subdomains? (change 154 with the repeating number of Chars)
 cat subdomain_enum.txt | grep -v "154 Ch" 
 ```
 
-You may need to change wordlists location to where you have them, this is the default configuration:
+You may need to change wordlists location (inside bie.py) to where you have them, this is the default configuration:
+![image](https://github.com/MohamedKarrab/Box-Initial-Enum/assets/107933631/9e344ba9-5252-4e29-acd1-00002951b751)
 
 
 ## Note
