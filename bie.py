@@ -3,7 +3,13 @@ import subprocess
 import os
 from multiprocessing import Process
 
+
+## --------- Configurations --------- ##
 output_folder = 'bie_scans'
+subdomains_wordlist = "/usr/share/wordlists/SecLists/Discovery/DNS/subdomains-top1million-20000.txt"
+directory_wordlist = "/usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt"
+## --------- ////////////// --------- ##
+
 
 def print_banner():
     banner = """
@@ -16,6 +22,8 @@ def print_banner():
 bie 1.1.2 Author: Mohamed Karrab @Alashwas
 """
     print(banner)
+    
+    print(f"Output folder: {output_folder}")
 
 def update_hosts_file(ip, domain):
     try:
@@ -55,7 +63,7 @@ def subdomain_enum(domain):
     try:
         print("[+] Starting subdomain_enum scan...")
         output_file_path = os.path.join(output_folder, 'subdomain_enum.txt')
-        command = f"wfuzz -w /usr/share/wordlists/SecLists/Discovery/DNS/subdomains-top1million-20000.txt -u http://{domain} -H 'Host: FUZZ.{domain}'"
+        command = f"wfuzz -w {subdomains_wordlist} -u http://{domain} -H 'Host: FUZZ.{domain}'"
         with open(output_file_path, 'w') as output_file:
             output_file.write(f"Executed: {command}\n")
         with open(output_file_path, 'a') as output_file:
@@ -68,7 +76,7 @@ def directory_fuzzing(target):
     try:
         print("[+] Starting directory_fuzzing scan...")
         output_file_path = os.path.join(output_folder, 'directory_fuzzing.txt')
-        command = f"ffuf -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -u http://{target}/FUZZ"
+        command = f"ffuf -w {directory_wordlist} -u http://{target}/FUZZ"
         with open(output_file_path, 'w') as output_file:
             output_file.write(f"Executed: {command}\n")
         with open(output_file_path, 'a') as output_file:
