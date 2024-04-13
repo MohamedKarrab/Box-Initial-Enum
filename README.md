@@ -9,14 +9,14 @@
 ╚═════╝ ╚═╝╚══════╝
 ```
 
-This script automates initial enumeration tasks commonly performed on Hack The Box (HTB) and TryHackMe machines. It integrates various tools such as Nmap, Nikto, wfuzz, and ffuf to provide comprehensive analysis of a target's infrastructure and web applications.
+This script automates initial enumeration tasks commonly performed on Hack The Box (HTB) and TryHackMe machines. It integrates many tools such as Nmap, Nikto, ffuf.. to provide comprehensive scanning and enumeration of a target's infrastructure and web applications.
 
 ## Features
 
 - **Nmap Scans**: Conducts both classic and full port Nmap scans with aggressive options.
 - **Subdomain Enumeration**: Utilizes wfuzz to discover subdomains of the specified domain.
 - **Directory Fuzzing**: Employs ffuf to perform directory fuzzing on the provided domain.
-- **Web Server Scan**: Conducts a web server scan using Nikto, identifying potential vulnerabilities and misconfigurations.
+- **Web Server Scan**: Conducts a web server scan using Nikto.
 - **Additional Enumeration**: Placeholder for integrating further enumeration tools as needed.
 
 ## Prerequisites
@@ -25,28 +25,26 @@ This script automates initial enumeration tasks commonly performed on Hack The B
 - Nikto
 - wfuzz
 - ffuf
+- enum4linux
 
 ## Usage
 
 ```bash
-python script.py <ip> [--domain <domain>]
+python script.py <ip> [-d <domain>]
 ```
 
 - `<ip>`: Mandatory argument specifying the IP address of the target.
-- `[--domain <domain>]`: Optional argument providing the domain name of the target.
+- `[-d/--domain <domain>]`: Optional argument providing the domain name of the target (for subdomain enumeration).
 
 Example:
 
 ```bash
-python script.py 10.10.11.242 --domain example.com
+python script.py <IP> --domain example.com
 ```
-
-## Output
-
-Results from the scans and enumerations will be displayed in the terminal and piped accordingly for further analysis.
 
 ## Note
 
+- This script needs to be ran using sudo for the /etc/hosts changes to take place.
 - Ensure that you have appropriate permissions before scanning any target.
 - Usage of this script for unauthorized access or against targets without proper authorization is strictly prohibited and may be illegal.
 
