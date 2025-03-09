@@ -9,7 +9,7 @@
 ╚═════╝ ╚═╝╚══════╝
 ```
 
-Bie automates initial enumeration and scanning commonly performed on Hack The Box (HTB) and TryHackMe machines. It integrates many tools such as Nmap, Nikto, ffuf, enum4linux.. to be as comprehensive as possible.
+Bie automates initial enumeration and scanning performed on HackTheBox (HTB) and TryHackMe machines. It integrates many tools such as Nmap, Nikto, ffuf, enum4linux.. to be as comprehensive as possible.
 
 ## Features
 
