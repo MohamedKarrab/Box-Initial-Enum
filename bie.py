@@ -19,7 +19,7 @@ def print_banner():
 ██╔══██╗██║██╔══╝  
 ██████╔╝██║███████╗
 ╚═════╝ ╚═╝╚══════╝
-bie 1.1.2 Author: Mohamed Karrab @Alashwas
+bie 1.1.2 Author: @_Karrab
 """
     print(banner)
     
